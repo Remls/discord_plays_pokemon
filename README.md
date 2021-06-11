@@ -20,3 +20,6 @@ Bot is currently set up to play Generation 1-5 games, since it only uses ABXY + 
 - `a 7` - presses a 7 times (it mashes pretty fast, so inputs can get eaten depending on what the game is doing)
 - `run on/off` - toggles whether b is held down (asynchronous - can use other commands once this is toggled)
 
+## Issues
+- Currently players can't get past the opening for Pokemon D/P/Pt because Prof. Rowan demands that you tap the touchscreen. Host just has to click on the button for players to proceed. Trying to come up with a way to remedy this.
+- Any other instance I'm missing where you have to touch the touchscreen to proceed past a certain point.
