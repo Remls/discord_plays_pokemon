@@ -19,6 +19,7 @@ const MIDDLEWARE = [keyHoldParser, keyTapParser, keyMultiTapParser]
 // undefined.
 function parseCommandString(str) {
     for (const mw of MIDDLEWARE) {
+        // Try to parse this message with each middleware. If one succeeds, return its action.
         const mwRes = mw(str);
 
         if (mwRes)
@@ -31,7 +32,6 @@ module.exports = parseCommandString;
 //============ COMMAND PARSING MIDDLEWARE ============//
 function keyHoldParser(str) {
     let args = parseArgs(str);
-
     const isHold = (args.length === 2) && (isValidKeycode(args[0])) && isTime(args[1]);
 
     if (isHold)
@@ -41,17 +41,17 @@ function keyHoldParser(str) {
 
 function keyTapParser(str) {
     let args = parseArgs(str);
+    const isTap = (args.length === 1) && (isValidKeycode(args[0]))
 
-    if ((args.length === 1) && (isValidKeycode(args[0])))
+    if (isTap)
         return new TapKey(args[0], 1)
 }
 
 function keyMultiTapParser(str) {
     let args = parseArgs(str);
+    const isMultiTap = (args.length === 2) && (isValidKeycode(args[0])) && isInteger(args[1]);
 
-    const is_multi_tap = (args.length === 2) && (isValidKeycode(args[0])) && isInteger(args[1]);
-
-    if (is_multi_tap)
+    if (isMultiTap)
         return new TapKey(args[0], parseInt(args[1]))
 }
 
