@@ -10,7 +10,8 @@ class ActionQueue {
 
         this.running = true;
 
-        for (let action of this.actions) {
+        while (this.actions.length > 0) {
+            const action = this.actions.shift()
             await action.run();
         }
 
