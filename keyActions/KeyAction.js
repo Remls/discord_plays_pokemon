@@ -4,11 +4,11 @@ class KeyAction {
     }
 
     //Runner to support future features like cancellation
-    async run() {
-        await this._run()
+    async run(discordMessage, discordClient) {
+        await this._run(discordMessage, discordClient);
     }
 
-    async _run() {
+    async _run(discordMessage, discordClient) {
         throw new Error(`Function >async _run()< is unimplemented in the KeyAction child class >${this.constructor.name}<!`);
     }
 

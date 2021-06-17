@@ -1,3 +1,7 @@
+function queuedAction(action, discordMessage, discordClient) {
+    return {action, message: discordMessage, client: discordClient};
+}
+
 class ActionQueue {
     constructor() {
         this.actions = [];
@@ -11,16 +15,17 @@ class ActionQueue {
         this.running = true;
 
         while (this.actions.length > 0) {
-            const action = this.actions.shift()
-            await action.run();
+            const {action, message, client} = this.actions.shift()
+            await action.run(message, client);
         }
 
         this.running = false
     }
 
-    add(action) {
+    add(action, discordMessage, discordClient) {
         if (action) {
-            this.actions.push(action);
+
+            this.actions.push(queuedAction(action, discordMessage, discordClient));
 
             //This call starts the queue runner, if it isn't already running.
             //Ignore the promise on purpose.

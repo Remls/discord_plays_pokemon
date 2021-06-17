@@ -8,7 +8,7 @@ class TapKey extends KeyAction {
         this.numTaps = numTaps;
     }
 
-    async _run() {
+    async _run(discordMessage, discordClient) {
         for (let i = 0; i < this.numTaps; i++) {
             //emu.keyTap(this.keycode)
             console.log(`Tapping ${this.keycode}`);
