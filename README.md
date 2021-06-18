@@ -17,7 +17,7 @@ Bot is currently set up to play Generation 1-5 games, since it only uses ABXY + 
 
 ## Commands
 - `a/b/x/y/up/right/down/left` - Any command used by itself will fire ONCE
-- `a 7 s` - holds down the A button for 7 seconds (synchronous, have to wait until finished to issue another command) 
+- `a 7s` - holds down the A button for 7 seconds (synchronous, have to wait until finished to issue another command) 
 - `a 7` - presses a 7 times (it mashes pretty fast, so inputs can get eaten depending on what the game is doing)
 - `run on/off` - toggles whether b is held down (asynchronous - can use other commands once this is toggled)
 
