@@ -10,11 +10,11 @@ class HoldKey extends KeyAction {
     }
 
     async _run(discordMessage, discordClient) {
-        //emu.keyToggle(this.keycode, "down");
-        console.log(`${this.keycode} for ${this.duration}ms`);
+        emu.keyToggle(this.keycode, "down");
+        //console.log(`${this.keycode} for ${this.duration}ms`);
         await sleep(this.duration);
 
-        //emu.keyToggle(this.keycode, "up");
+        emu.keyToggle(this.keycode, "up");
 
     }
 }
