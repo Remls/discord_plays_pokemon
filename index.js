@@ -1,5 +1,13 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.MessageContent
+    ],
+    partials: [Partials.Channel]
+});
 const {token} = require('./config.json');
 const parseCommandString = require("./commands");
 const ActionQueue = require("./ActionQueue");
@@ -10,13 +18,13 @@ client.once('ready', () => console.log('Ready!'));
 
 function handleMessage(msg) {
     let action = parseCommandString(msg.content);
-    let userId = msg.member?.id;
+    let userId = msg.author.id;
     if (action) {
         actionQueue.add(action, msg, userId, client);
     }
 }
 
-client.on("message", handleMessage);
+client.on("messageCreate", handleMessage);
 
 client.login(token);
 
