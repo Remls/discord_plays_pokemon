@@ -10,7 +10,10 @@ client.once('ready', () => console.log('Ready!'));
 
 function handleMessage(msg) {
     let action = parseCommandString(msg.content);
-    actionQueue.add(action, msg, client);
+    let userId = msg.member?.id;
+    if (action) {
+        actionQueue.add(action, msg, userId, client);
+    }
 }
 
 client.on("message", handleMessage);

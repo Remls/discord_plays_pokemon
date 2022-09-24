@@ -1,10 +1,11 @@
-function queuedAction(action, discordMessage, discordClient) {
-    return {action, message: discordMessage, client: discordClient};
+function queuedAction(action, discordMessage, userId, discordClient) {
+    return {action, message: discordMessage, userId, client: discordClient};
 }
 
 class ActionQueue {
     constructor() {
         this.actions = [];
+        this.lastQueuedUserId = null;
         this.running = false;
     }
 
@@ -15,17 +16,22 @@ class ActionQueue {
         this.running = true;
 
         while (this.actions.length > 0) {
-            const {action, message, client} = this.actions.shift()
-            await action.run(message, client);
+            const {action, message, userId, client} = this.actions.shift();
+            if (userId !== this.lastQueuedUserId) {
+                this.lastQueuedUserId = userId;
+                await action.run(message, client);
+            } else {
+                console.log(`Ignoring ${message} from ${userId} as it is a command from the same person`)
+            }
         }
 
         this.running = false
     }
 
-    add(action, discordMessage, discordClient) {
+    add(action, discordMessage, userId, discordClient) {
         if (action) {
 
-            this.actions.push(queuedAction(action, discordMessage, discordClient));
+            this.actions.push(queuedAction(action, discordMessage, userId, discordClient));
 
             //This call starts the queue runner, if it isn't already running.
             //Ignore the promise on purpose.
